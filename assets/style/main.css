@@ -1,0 +1,133 @@
+@import './fonts.css';
+
+h1,h2{
+    font-family: 'Star Jedi', arial;
+    text-align: center;
+    color: orange;
+    margin: 50px 0 0 0;
+}
+
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #191919;
+}
+
+header{
+    height: auto;
+    width: 100%;
+}
+
+ul,li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#main{
+    flex-direction: row;
+    width: 100%;
+    flex: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    
+}
+
+
+
+.item{
+    display: flex;
+    width: auto;
+    flex: 1 1 33%;
+    
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    margin: 5px;
+    color: #ffffff;
+    padding: 5px;
+}
+
+.info{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pad: 5px;
+    -webkit-box-shadow: -1px 0px 39px -7px rgba(50,50,50,0.5);
+    -moz-box-shadow: -1px 0px 39px -7px rgba(50,50,50,0.5);
+    box-shadow: -1px 0px 39px -7px rgba(50,50,50,0.5);
+}
+
+.more-info{
+    cursor: pointer;
+    text-decoration: underline;
+    color: orange;
+}
+.planets{
+    display: flex;
+    flex-direction: column;
+    margin: 0 50px;
+}
+.planets h2{
+    color: #ffffff;
+    text-decoration: underline 3px orange;
+    margin: 0 0 50px 0;
+    
+}
+
+button{
+    background: none;
+    color: orange;
+    text-decoration: underline;
+    border: none;
+
+}
+
+.line{
+
+    height: 3px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius:1px ;
+    margin: 50px 0;
+}
+
+#prev{
+    display: none;
+}
+
+.Fullinfo{
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    background-color: #232323;
+    border: 1px solid orange;
+    width: 400px;
+    height: 400px;
+}
+
+#planetInfoBlock{
+    display: none;
+    position: fixed;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    top: 50%;
+    padding: 50px;
+    left: 50%;
+    width: auto;
+    height: auto;
+    
+    background: #232323;
+    color: #ffffff;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+#planetInfoBlock button{
+    align-self: end;
+}
