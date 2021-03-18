@@ -22,7 +22,7 @@ searchBtn.addEventListener("click",_=>{
     mainUrl = "https://swapi.dev/api/planets/?search=";
     mainUrl +=searchLine.value
     search()
-    console.log(searchNode)
+
     
 })
 //search engine
@@ -31,7 +31,7 @@ async function search() {
     searchNode = await fetch(dir)
     .then(response => response.json())
         .then(data => searchNode = data );
-        console.log(searchNode)
+
         await searchBody()
         
     return searchNode
@@ -108,8 +108,6 @@ function searchBody() {
 async function linkToName(planet) {
     fes = ''
     let links = planet.residents
-    console.log(links)
-    console.log(links.length)
     if(links.length === 0){
         document.getElementById("resNames").innerHTML = "none"
     }else{
@@ -168,7 +166,7 @@ async function filmPicker(link) {
 
 
 // Next/Prev page nav
-const NextPage = ()=>{ console.log(mainUrl)
+const NextPage = ()=>{
     if(searchNode.next == null){
         console.log("last")
     }else{
@@ -240,7 +238,7 @@ function closeInfoBlock() {
 
 let gridSelector = document.getElementById("gridAjust")
 gridSelector.addEventListener("change", _=>{
-    console.log(gridSelector.value)
+    
     switch(gridSelector.value){
         case '1':
             document.documentElement.style.setProperty('--grid-change', "50%")
