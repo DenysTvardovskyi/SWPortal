@@ -182,7 +182,7 @@ function reply_id(clicked_id){
     let result = 
                 `
                 <div class="info-wrapper">
-                    <div class = "title-nav"><h3>${planet.name}</h3> <button onclick="closeInfoBlock()">Close</button></div>
+                    <div class = "title-nav"><h3>${planet.name}<p>(${planet.name})</p></h3> <button onclick="closeInfoBlock()">Close</button></div>
                     <div class = "info-blocks">
                         
                         <div class="left">
