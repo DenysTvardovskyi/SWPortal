@@ -49,15 +49,6 @@ async function search() {
     return searchNode
     
 }
-
-
-// async function planetsAp() {
-//     node = await fetch(mainUrl)
-//         .then(response => response.json())
-//         .then(result => node = result );
-    
-    
-// };
 async function nameP(link) {
     
     full=  await fetch(link)
@@ -72,8 +63,6 @@ async function namePicker(link) {
         .then(data => namePi = data );
     return namePi
 }
-
-// planetsAp()
 function closeInfoBlock() {
     document.getElementById("planetInfoBlock").style.display = 'none'
 }
@@ -113,17 +102,12 @@ function reply_id(clicked_id,node){
     document.getElementById('planetInfoBlock').innerHTML = result;
 
 }
-
  const  DETAILS_NAME = async (link)=>{
     await namePicker(link).then((a)=>{
         fes+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
     })
-    return fes  
-    
-    
+    return fes   
 }
-
-
 async function linkToName(planet) {
     fes = ''
     let links = planet.residents
@@ -134,18 +118,14 @@ async function linkToName(planet) {
            await DETAILS_NAME(links[i])
         }
         document.getElementById("resNames").innerHTML = fes
-    }
-    
-    
+    } 
 }
-
 const DETAILS = async (link)=>{
     await nameP(link).then((a)=>{
         res+= ""+ a.title + " - " + a.release_date +"; <br> " 
     })
     return res
 }
-
 async function linkToFilm(planet) {
     res = ''
     let linksF = planet.films
@@ -156,13 +136,8 @@ async function linkToFilm(planet) {
            await DETAILS(linksF[i])
         }
         document.getElementById("filmTit").innerHTML = res
-    }
-    
-    
+    }  
 }
-
-
-
 function searchBody() {
     let ped = document.getElementById("main")
     ped.innerHTML=''
@@ -185,31 +160,6 @@ function searchBody() {
         ped.innerHTML += result1
     }
 }
-
-
-// function test() {
-//     let ped = document.getElementById("main")
-//     ped.innerHTML=''
-//     for (let i = 0; i < node.results.length; i++){
-//         let result1 =
-//         `
-//         <div class="item">
-//             <div class="info">
-//                 <div class="basic-info">
-//                     <li>Name: ${node.results[i].name}</li>
-//                     <li>Diameter: ${node.results[i].diameter}km</li>
-//                     <li>Population: ${node.results[i].population}</li>
-//                 </div>
-//                 <div class="more-info">
-//                     <li id="${i}" onclick="reply_id(this.id,node)">More Info</li>
-//                 </div>
-//             </div>
-//         </div>
-//         ` 
-//         ped.innerHTML += result1
-//     }
-// }
-
 const NextPage = ()=>{ console.log(mainUrl)
     if(searchNode.next == null){
         console.log("last")
