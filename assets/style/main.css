@@ -1,4 +1,4 @@
-@font-face{font-family:star jedi;font-style:normal;font-weight:400;src:local('Star Jedi'),local('StarJedi-Regular'),url(http://allfont.net/cache/fonts/star-jedi_108a0c1f596b5c0a80628b4566a9f336.woff) format('woff'),url(http://allfont.net/cache/fonts/star-jedi_108a0c1f596b5c0a80628b4566a9f336.ttf) format('truetype')}
+@import url(https://allfont.net/allfont.css?fonts=star-jedi);
 h1,h2{
     font-family: 'Star Jedi', arial;
     text-align: center;
@@ -162,6 +162,21 @@ button{
     height: 400px;
 }
 
+#main .info-wrapper{
+    color: #ffffff;
+}
+
+
+#main .title-nav{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+#main .title-nav h3{
+    margin: 20px 0;
+
+}
 #planetInfoBlock{
     display: none;
     position: fixed;

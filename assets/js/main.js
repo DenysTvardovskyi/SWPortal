@@ -19,6 +19,7 @@ const laod = document.addEventListener("load", search())
 let searchLine = document.getElementById("search")
 let searchBtn = document.getElementById("searchBtn")
 searchBtn.addEventListener("click",_=>{
+    mainUrl = "https://swapi.dev/api/planets/?search=";
     mainUrl +=searchLine.value
     search()
     console.log(searchNode)
@@ -44,32 +45,42 @@ function searchBody() {
     for (let i = 0; i < searchNode.results.length; i++){
         if(searchNode.results.length === 1){
             let planet = searchNode.results[0]
-            linkToName(planet)
-            linkToFilm(planet)
             let result2 = 
                 `
-                <div class="solo">
-                
-                    <h3>Title: ${planet.name}  </h3>
-                    <ul>
-                        <li>Rotation Period: ${planet.rotation_period} h</li>
-                        <li>Orbital Period: ${planet.orbital_period} days</li>
-                        <li>Diameter: ${planet.diameter} km</li>
-                        <li>Climate: ${planet.climate}</li>
-                        <li>Gravity: ${planet.gravity} G</li>
-                        <li>Terrain: ${planet.terrain}</li>
-                        <li>Surface Water: ${planet.surface_water} %</li>
-                        <li>Population: ${planet.population}</li>
-                        <li>Residents:                          
-                            <ul id="resNames"> 
-                            </ul>
-                        </li>
-                        <li>Films: 
-                            <ul id="filmTit"> 
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${planet.name}<p>(${planet.name})</p></h3></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Rotation Period: <span>${planet.rotation_period}</span> h</li>
+                                <li>Orbital Period:  <span>${planet.orbital_period}</span> days</li>
+                                <li>Diameter:  <span>${planet.diameter}</span> km</li>
+                                <li>Climate:  <span>${planet.climate}</span></li>
+                                <li>Gravity:  <span>${planet.gravity}</span> G</li>
+                                <li>Terrain:  <span>${planet.terrain}</span></li>
+                                <li>Surface Water:  <span>${planet.surface_water}</span> %</li>
+                                <li>Population:  <span>${planet.population}</span></li>
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                <h4>Residents</h4>
+                                <ul id="resNames">
+                 
+                                    ${linkToName(planet)}
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Films</h4>
+                                <ul id="filmTit"> 
                                 
-                            </ul>
-                        </li>
-                    </ul>
+                                    ${linkToFilm(planet)}          
+                                </ul>
+                            </div>
+                        </div> 
+                    </div>
                 </div>`
                 ped.innerHTML += result2
         }else{
@@ -97,8 +108,10 @@ function searchBody() {
 async function linkToName(planet) {
     fes = ''
     let links = planet.residents
-    if(links.length==0){
-        return "none"
+    console.log(links)
+    console.log(links.length)
+    if(links.length === 0){
+        document.getElementById("resNames").innerHTML = "none"
     }else{
         for(let i =0; i<links.length;i++){
            await DETAILS_NAME(links[i])
@@ -127,7 +140,7 @@ async function namePicker(link) {
 async function linkToFilm(planet) {
     res = ''
     let linksF = planet.films
-    if(linksF.length==0){
+    if(linksF.length===0){
         return "none"
     }else{
         for(let i =0; i<linksF.length;i++){
