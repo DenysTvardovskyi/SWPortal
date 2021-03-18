@@ -12,7 +12,7 @@ let full = null;
 let namePi = null
 let searchNode = null;
 let fes = [];
-let mainUrl = "http://swapi.dev/api/planets/?page=1";
+let mainUrl = "https://swapi.dev/api/planets/?search=";
 
 let gridSelector = document.getElementById("gridAjust")
 gridSelector.addEventListener("change", _=>{
@@ -29,16 +29,35 @@ gridSelector.addEventListener("change", _=>{
             break;
     }
 })
-
-
-async function planetsAp() {
-    node = await fetch(mainUrl)
-        .then(response => response.json())
-        .then(result => node = result );
-    const laod = document.addEventListener("load",
-        test())
+const laod = document.addEventListener("load", search())
+let searchLine = document.getElementById("search")
+let searchBtn = document.getElementById("searchBtn")
+searchBtn.addEventListener("click",_=>{
+    mainUrl +=searchLine.value
+    search()
+    console.log(searchNode)
     
-};
+})
+async function search() {
+    let dir = mainUrl
+    searchNode = await fetch(dir)
+    .then(response => response.json())
+        .then(data => searchNode = data );
+        console.log(searchNode)
+        searchBody()
+        
+    return searchNode
+    
+}
+
+
+// async function planetsAp() {
+//     node = await fetch(mainUrl)
+//         .then(response => response.json())
+//         .then(result => node = result );
+    
+    
+// };
 async function nameP(link) {
     
     full=  await fetch(link)
@@ -54,7 +73,7 @@ async function namePicker(link) {
     return namePi
 }
 
-planetsAp()
+// planetsAp()
 function closeInfoBlock() {
     document.getElementById("planetInfoBlock").style.display = 'none'
 }
@@ -142,23 +161,7 @@ async function linkToFilm(planet) {
     
 }
 
-let searchLine = document.getElementById("search")
-let searchBtn = document.getElementById("searchBtn")
-searchBtn.addEventListener("click",_=>{
-    search(searchLine.value)
-    console.log(searchNode)
-    
-})
-async function search(key) {
-    let dir = `https://swapi.dev/api/planets/?search=${key}`
-    searchNode = await fetch(dir)
-    .then(response => response.json())
-        .then(data => searchNode = data );
-        console.log(searchNode)
-        searchBody()
-    return searchNode
-    
-}
+
 
 function searchBody() {
     let ped = document.getElementById("main")
@@ -184,41 +187,41 @@ function searchBody() {
 }
 
 
-function test() {
-    let ped = document.getElementById("main")
-    ped.innerHTML=''
-    for (let i = 0; i < node.results.length; i++){
-        let result1 =
-        `
-        <div class="item">
-            <div class="info">
-                <div class="basic-info">
-                    <li>Name: ${node.results[i].name}</li>
-                    <li>Diameter: ${node.results[i].diameter}km</li>
-                    <li>Population: ${node.results[i].population}</li>
-                </div>
-                <div class="more-info">
-                    <li id="${i}" onclick="reply_id(this.id,node)">More Info</li>
-                </div>
-            </div>
-        </div>
-        ` 
-        ped.innerHTML += result1
-    }
-}
+// function test() {
+//     let ped = document.getElementById("main")
+//     ped.innerHTML=''
+//     for (let i = 0; i < node.results.length; i++){
+//         let result1 =
+//         `
+//         <div class="item">
+//             <div class="info">
+//                 <div class="basic-info">
+//                     <li>Name: ${node.results[i].name}</li>
+//                     <li>Diameter: ${node.results[i].diameter}km</li>
+//                     <li>Population: ${node.results[i].population}</li>
+//                 </div>
+//                 <div class="more-info">
+//                     <li id="${i}" onclick="reply_id(this.id,node)">More Info</li>
+//                 </div>
+//             </div>
+//         </div>
+//         ` 
+//         ped.innerHTML += result1
+//     }
+// }
 
 const NextPage = ()=>{ console.log(mainUrl)
-    if(node.next == null){
+    if(searchNode.next == null){
         console.log("last")
     }else{
-        mainUrl = node.next; planetsAp();
+        mainUrl = searchNode.next; search();
     }
 }
 const PrevPage = ()=>{
-    if(node.previous == null){
+    if(searchNode.previous == null){
         console.log("last")
     }else{
-        mainUrl = node.previous; planetsAp()
+        mainUrl = searchNode.previous; search()
     }
     
 }

@@ -109,6 +109,44 @@ button{
     margin: 50px 0;
 }
 
+.s-line{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.s-line #search{
+    background: none;
+    color: orange;
+    border: none;
+    border-bottom: 1px solid orange;
+    
+    width: 50%;
+    
+}
+.s-line #search:focus{
+    outline: none;
+}
+
+.s-line #searchBtn{
+    background: orange;
+    border:none;
+    color: #191919;
+
+    
+}
+.s-line #searchBtn:hover{
+    cursor: pointer;
+    outline: none;
+}
+.s-line #searchBtn:active{
+    outline: none;
+}
+.s-line #searchBtn:focus{
+    outline: none;
+}
 
 .Fullinfo{
     position: fixed;
