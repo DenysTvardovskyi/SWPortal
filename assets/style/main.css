@@ -7,6 +7,9 @@ h1,h2{
     margin: 50px 0 0 0;
 }
 
+:root{
+    --grid-change: 33%;
+}
 
 body{
     margin: 0;
@@ -27,6 +30,7 @@ ul,li{
 #main{
     flex-direction: row;
     width: 100%;
+    min-height: 400px;
     flex: auto;
     display: flex;
     flex-wrap: wrap;
@@ -34,12 +38,21 @@ ul,li{
     
 }
 
+#gridAjust{
+    background: none;
+    color: orange;
+    outline: none;
+    border: none;
+    appearance: none;
+    max-width: 100px;
+    border-bottom: 1px solid orange;
+}
 
 
 .item{
     display: flex;
     width: auto;
-    flex: 1 1 33%;
+    flex: 1 1 var(--grid-change);
     
     height: auto;
     flex-direction: column;

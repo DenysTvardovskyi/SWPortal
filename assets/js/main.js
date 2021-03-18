@@ -12,7 +12,21 @@ let full = null;
 let namePi = null
 let mainUrl = "http://swapi.dev/api/planets/?page=1";
 
-
+let gridSelector = document.getElementById("gridAjust")
+gridSelector.addEventListener("change", _=>{
+    console.log(gridSelector.value)
+    switch(gridSelector.value){
+        case '1':
+            document.documentElement.style.setProperty('--grid-change', "50%")
+            break;
+        case '2':
+            document.documentElement.style.setProperty("--grid-change", "33%")
+            break;
+        case '3': 
+            document.documentElement.style.setProperty("--grid-change", "25%")
+            break;
+    }
+})
 
 function planetsAp() {
     node = fetch(mainUrl)
