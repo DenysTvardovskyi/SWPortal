@@ -35,7 +35,8 @@ async function planetsAp() {
     node = await fetch(mainUrl)
         .then(response => response.json())
         .then(result => node = result );
-    const laod = document.addEventListener("load", test())
+    const laod = document.addEventListener("load",
+        test())
     
 };
 async function nameP(link) {
@@ -58,7 +59,7 @@ function closeInfoBlock() {
     document.getElementById("planetInfoBlock").style.display = 'none'
 }
 
-function reply_id(clicked_id){
+function reply_id(clicked_id,node){
     document.getElementById("planetInfoBlock").style.display = 'flex'
     let planet = node.results[clicked_id]
     linkToName(planet)
@@ -141,15 +142,22 @@ async function linkToFilm(planet) {
     
 }
 
-
-
-
+let searchLine = document.getElementById("search")
+let searchBtn = document.getElementById("searchBtn")
+searchBtn.addEventListener("click",_=>{
+    search(searchLine.value)
+    console.log(searchNode)
+    
+})
 async function search(key) {
     let dir = `https://swapi.dev/api/planets/?search=${key}`
     searchNode = await fetch(dir)
     .then(response => response.json())
         .then(data => searchNode = data );
+        console.log(searchNode)
+        searchBody()
     return searchNode
+    
 }
 
 function searchBody() {
@@ -166,7 +174,7 @@ function searchBody() {
                     <li>Population: ${searchNode.results[i].population}</li>
                 </div>
                 <div class="more-info">
-                    <li id="${i}" onclick="reply_id(this.id)">More Info</li>
+                    <li id="${i}" onclick="reply_id(this.id,searchNode)">More Info</li>
                 </div>
             </div>
         </div>
@@ -190,7 +198,7 @@ function test() {
                     <li>Population: ${node.results[i].population}</li>
                 </div>
                 <div class="more-info">
-                    <li id="${i}" onclick="reply_id(this.id)">More Info</li>
+                    <li id="${i}" onclick="reply_id(this.id,node)">More Info</li>
                 </div>
             </div>
         </div>
