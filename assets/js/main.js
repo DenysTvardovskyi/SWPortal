@@ -10,6 +10,8 @@
 let filmNode = null;
 let residentsNode = null;
 let speciesNode = null;
+let homeworldNode = null;
+let peopleNode = null;
 let startshipNode = null;
 let vehiclesNode = null;
 let pilotNode = null;
@@ -53,6 +55,9 @@ async function search() {
         case "vehicles":
             await vehicles_search()
             break;
+        case "species":
+            await species_search()
+            break;
     }
         
         
@@ -60,6 +65,80 @@ async function search() {
     
 }
 
+function species_search() {
+    let ped = document.getElementById("main")
+    ped.innerHTML=''
+    
+    for (let i = 0; i < searchNode.results.length; i++){
+        if(searchNode.results.length === 1){
+            let species = searchNode.results[0]
+            let result2 = 
+                `
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${species.name}<p>(${species.name})</p></h3></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Classification: <span>${species.classification}</span></li>
+                                <li>Designation:  <span>${species.designation}</span></li>
+                                <li>Average height:  <span>${species.average_height}</span>cm</li>
+                                <li>Average livespan:  <span>${species.average_lifespan}</span> credists</li>
+                                <li>Eye colors:  <span>${species.eye_colors}</span>m</li>
+                                <li>Hair colors:  <span>${species.hair_colors}</span></li>
+                                <li>Language:  <span>${species.language}</span></li>
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                <h4>People</h4>
+                                <ul id="peopleTit"> 
+
+                                    ${linkToPeople(species)}
+                                        
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Homeworld</h4>
+                                <ul id="homeworldTit"> 
+                                
+                                    ${linkToHomeworld(species)} 
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Films</h4>
+                                <ul id="filmTit"> 
+                                
+                                    ${linkToFilm(species)}          
+                                </ul>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>`
+                ped.innerHTML += result2
+        }else{
+            let result1 =
+            `
+            <div class="item">
+                <div class="info">
+                    <div class="basic-info">
+                        <li>Name: ${searchNode.results[i].name}</li>
+                        <li>Clasification: ${searchNode.results[i].classification }km</li>
+                        <li>Language : ${searchNode.results[i].language }</li>
+                    </div>
+                    <div class="more-info">
+                        <li id="${i}" onclick="reply_species(this.id)">More Info</li>
+                    </div>
+                </div>
+            </div>
+            ` 
+            ped.innerHTML += result1
+        }
+    }
+}
+//starships
 function startship_search() {
     let ped = document.getElementById("main")
     ped.innerHTML=''
@@ -131,7 +210,7 @@ function startship_search() {
         }
     }
 }
-
+//vehicles
 function vehicles_search() {
     let ped = document.getElementById("main")
     ped.innerHTML=''
@@ -201,8 +280,7 @@ function vehicles_search() {
         }
     }
 }
-
-
+//people
 function people_search() {
     
     let ped = document.getElementById("main")
@@ -284,6 +362,7 @@ function people_search() {
 }
 
 //search result config
+//planet
 function searchBody() {
     let ped = document.getElementById("main")
     ped.innerHTML=''
@@ -351,6 +430,7 @@ function searchBody() {
 }
 
 //Convert links to residents data
+//residents
 async function linkToResidents(planet) {
     fes = ''
     let links = planet.residents
@@ -378,7 +458,7 @@ async function residentsPicker(link) {
 }
 
 
-
+//pilots
 async function linkToPilot(transport) {
     tra = ""
     let toFind = transport.pilots;
@@ -393,7 +473,6 @@ async function linkToPilot(transport) {
         document.getElementById("pilotsTit").innerHTML = tra
     } 
 }
-
 const pilotAsemble = async (link)=>{
     await pilotPicker(link).then((a)=>{
         tra+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
@@ -409,7 +488,7 @@ async function pilotPicker(link) {
 }
 
 
-//Convert links to film data
+//films
 async function linkToFilm(planet) {
     res = ''
     let linksF = planet.films
@@ -436,6 +515,54 @@ async function filmPicker(link) {
     return  filmNode
 }
 
+//people
+async function linkToPeople(planet) {
+    peo = ''
+    let peopleLinks = planet.people
+    if(peopleLinks.length===0){
+        return "none"
+    }else{
+        for(let i =0; i<peopleLinks.length;i++){
+           await peopleAsemble(peopleLinks[i])
+        }
+        document.getElementById("peopleTit").innerHTML = peo
+    }  
+}
+const peopleAsemble = async (link)=>{
+    await peoplePicker(link).then((a)=>{
+        peo+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
+    })
+    return peo
+}
+async function peoplePicker(link) {
+    
+    peopleNode=  await fetch(link)
+        .then(response => response.json())
+        .then(data =>   peopleNode = data );
+    return  peopleNode
+}
+
+//homeworld
+async function linkToHomeworld(planet) {
+    hom = ''
+    let homeworldLinks = planet.homeworld
+    await homeworldAsemble(homeworldLinks)
+    document.getElementById("homeworldTit").innerHTML = hom
+     
+}
+const homeworldAsemble = async (link)=>{
+    await homeworldPicker(link).then((a)=>{
+        hom+= ""+ a.name +" <br> " 
+    })
+    return hom
+}
+async function homeworldPicker(link) {
+    
+    homeworldNode=  await fetch(link)
+        .then(response => response.json())
+        .then(data =>   homeworldNode = data );
+    return  homeworldNode
+}
 
 
 
@@ -617,6 +744,63 @@ function reply_vehicles(clicked_id){
     document.getElementById('planetInfoBlock').innerHTML = result;
 
 }
+//species
+function reply_species(clicked_id){
+    document.getElementById("planetInfoBlock").style.display = 'flex'
+    let species = searchNode.results[clicked_id]
+    
+    
+    
+    let result = 
+    `
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${species.name}<p>(${species.name})</p></h3><button onclick="closeInfoBlock()">Close</button></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Classification: <span>${species.classification}</span></li>
+                                <li>Designation:  <span>${species.designation}</span></li>
+                                <li>Average height:  <span>${species.average_height}</span>cm</li>
+                                <li>Average livespan:  <span>${species.average_lifespan}</span> credists</li>
+                                <li>Eye colors:  <span>${species.eye_colors}</span>m</li>
+                                <li>Hair colors:  <span>${species.hair_colors}</span></li>
+                                <li>Language:  <span>${species.language}</span></li>
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                <h4>People</h4>
+                                <ul id="peopleTit"> 
+
+                                    ${linkToPeople(species)}
+                                        
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Homeworld</h4>
+                                <ul id="homeworldTit"> 
+                                
+                                    ${linkToHomeworld(species)} 
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Films</h4>
+                                <ul id="filmTit"> 
+                                
+                                    ${linkToFilm(species)}          
+                                </ul>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>`
+    document.getElementById('planetInfoBlock').innerHTML = result;
+
+}
+
+
 
 function closeInfoBlock() {
     document.getElementById("planetInfoBlock").style.display = 'none'
