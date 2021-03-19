@@ -79,4 +79,4 @@ function people_search() {
 }
 
 
-export function people_search()
+export functionpeople_search()

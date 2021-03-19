@@ -208,8 +208,8 @@ button{
     align-items: center;
     flex-direction: column;
     top: 50%;
-    min-width: 600px;
-    min-height: 400px;
+    min-width: 800px;
+    min-height: 500px;
     left: 50%;
     width: auto;
     height: auto;
@@ -258,7 +258,7 @@ button{
 }
 
 .info-blocks .left{
-    width: 100%;
+    width: 40%;
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -276,11 +276,15 @@ button{
     width: 100%;
     min-height: 400px;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
     align-items: flex-start;
 
 }
-
+.info-blocks .right .res{
+    margin: 0 10px;
+    flex: 1 1 25%
+}
 button:hover{
     cursor: pointer;
 }

@@ -6,6 +6,8 @@ let peopleNode = null;
 let startshipNode = null;
 let vehiclesNode = null;
 let pilotNode = null;
+let CharacterNode = null;
+let planetNode = null;
 
 //main node
 let searchNode = null;
@@ -54,6 +56,9 @@ async function search() {
             break;
         case "species":
             await species_search()
+            break;
+        case "films":
+            await films_search()
             break;
     }
         
@@ -345,7 +350,7 @@ function people_search() {
                 <div class="info">
                     <div class="basic-info">
                         <li>Name: ${searchNode.results[i].name}</li>
-                        <li>Birth Year: ${searchNode.results[i].birth_year }km</li>
+                        <li>Birth Year: ${searchNode.results[i].birth_year }</li>
                         <li>Homeworld: ${searchNode.results[i].gender }</li>
                     </div>
                     <div class="more-info">
@@ -424,6 +429,91 @@ function planet_search() {
         }
     }
 }
+//films
+function films_search() {
+    let ped = document.getElementById("main")
+    ped.innerHTML=''
+    
+    for (let i = 0; i < searchNode.results.length; i++){
+        if(searchNode.results.length === 1){
+            let planet = searchNode.results[0]
+            let result2 = 
+                `
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${planet.title}<p>(${planet.title})</p></h3></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Opening crawl: <br><span>${planet.opening_crawl  }</span></li>
+                                <li>Director:  <span>${planet.director }</span> days</li>
+                                <li>Producer:  <span>${planet.producer }</span> km</li>
+                                <li>Release date :  <span>${planet.release_date }</span></li>
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                <h4>StartShips</h4>
+                                <ul id="starshipTit">
+            
+                                    ${linkToStarship(planet)}
+                                </ul>
+                            </div>
+                            <div class="res">
+                                <h4>Vehicles</h4>
+                                <ul id="vehiclesTit">
+                                    ${linkToVehicles(planet)}
+                                    
+                                </ul>
+                            </div>
+                            <div class="res">
+                                <h4>Species</h4>
+                                <ul id="speciesTit">
+                                    ${linkToSpecies(planet)}
+                                    
+                                </ul>
+                            </div>
+                            <div class="res">
+                                <h4>Characters</h4>
+                                <ul id="charactersTit">
+            
+                                    ${linkToCharacter(planet)}
+                                </ul>
+                            </div>
+                            <div class="res">
+                                <h4>Planets</h4>
+                                <ul id="planetsTit">
+                                    ${linkToPlanet(planet)}
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+                ped.innerHTML += result2
+        }else{
+            let result1 =
+            `
+            <div class="item">
+                <div class="info">
+                    <div class="basic-info">
+                        <li>Title: ${searchNode.results[i].title}</li>
+                        <li>Episod: ${searchNode.results[i].episode_id}</li>
+                        <li>Director: ${searchNode.results[i].director}</li>
+                    </div>
+                    <div class="more-info">
+                        <li id="${i}" onclick="reply_films(this.id)">More Info</li>
+                    </div>
+                </div>
+            </div>
+            ` 
+            ped.innerHTML += result1
+        }
+    }
+}
+
+
 //----------------------------------------------------
 //Convert links to residents data
 //----------------------------------------------------
@@ -637,8 +727,58 @@ async function speciesPicker(link) {
         .then(data =>   speciesNode = data );
     return  speciesNode
 }
-
-
+//character
+async function linkToCharacter(planet) {
+    cha = ''
+    let characterLinks = planet.characters
+    if(characterLinks.length===0){
+        return "none"
+    }else{
+        for(let i =0; i<characterLinks.length;i++){
+           await characterAsemble(characterLinks[i])
+        }
+        document.getElementById("charactersTit").innerHTML = cha
+    }  
+}
+const characterAsemble = async (link)=>{
+    await characterPicker(link).then((a)=>{
+        cha+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
+    })
+    return cha
+}
+async function characterPicker(link) {
+    
+    CharacterNode=  await fetch(link)
+        .then(response => response.json())
+        .then(data =>   CharacterNode = data );
+    return  CharacterNode
+}
+//planet
+async function linkToPlanet(planet) {
+    pla = ''
+    let palnetLinks = planet.characters
+    if(palnetLinks.length===0){
+        return "none"
+    }else{
+        for(let i =0; i<palnetLinks.length;i++){
+           await palnetsAsemble(palnetLinks[i])
+        }
+        document.getElementById("planetsTit").innerHTML = pla
+    }  
+}
+const palnetsAsemble = async (link)=>{
+    await palnetsPicker(link).then((a)=>{
+        pla+= ""+ a.name +"; <br> " 
+    })
+    return pla
+}
+async function palnetsPicker(link) {
+    
+    planetNode=  await fetch(link)
+        .then(response => response.json())
+        .then(data =>   planetNode = data );
+    return  planetNode
+}
 
 // Next/Prev page nav
 const NextPage = ()=>{
@@ -936,53 +1076,62 @@ function reply_people(clicked_id){
 //films
 function reply_films(clicked_id){
     document.getElementById("planetInfoBlock").style.display = 'flex'
-    let species = searchNode.results[clicked_id]
+    let filmS = searchNode.results[clicked_id]
     
     
     
     let result = 
     `
                 <div class="info-wrapper">
-                    <div class = "title-nav"><h3>${species.name}<p>(${species.name})</p></h3><button onclick="closeInfoBlock()">Close</button></div>
+                    <div class = "title-nav"><h3>${filmS.title}<p>(${filmS.title})</p></h3><button onclick="closeInfoBlock()">Close</button></div>
                     <div class = "info-blocks">
                         
                         <div class="left">
                             <h4>Specification</h4>
                             <div class="spec-sec">
-                                <li>Classification: <span>${species.classification}</span></li>
-                                <li>Designation:  <span>${species.designation}</span></li>
-                                <li>Average height:  <span>${species.average_height}</span>cm</li>
-                                <li>Average livespan:  <span>${species.average_lifespan}</span> credists</li>
-                                <li>Eye colors:  <span>${species.eye_colors}</span>m</li>
-                                <li>Hair colors:  <span>${species.hair_colors}</span></li>
-                                <li>Language:  <span>${species.language}</span></li>
+                                <li>Opening crawl: <br><span>${filmS.opening_crawl  }</span></li>
+                                <li>Director:  <span>${filmS.director }</span> days</li>
+                                <li>Producer:  <span>${filmS.producer }</span> km</li>
+                                <li>Release date :  <span>${filmS.release_date }</span></li>
                             </div>
                         </div> 
                         <div class="right">
                             <div class="res">
-                                <h4>People</h4>
-                                <ul id="peopleTit"> 
-
-                                    ${linkToPeople(species)}
-                                        
+                                <h4>StartShips</h4>
+                                <ul id="starshipTit">
+            
+                                    ${linkToStarship(filmS)}
                                 </ul>
                             </div>
-                            <div class="fil">
-                                <h4>Homeworld</h4>
-                                <ul id="homeworldTit"> 
-                                
-                                    ${linkToHomeworld(species)} 
+                            <div class="res">
+                                <h4>Vehicles</h4>
+                                <ul id="vehiclesTit">
+                                    ${linkToVehicles(filmS)}
+                                    
                                 </ul>
                             </div>
-                            <div class="fil">
-                                <h4>Films</h4>
-                                <ul id="filmTit"> 
-                                
-                                    ${linkToFilm(species)}          
+                            <div class="res">
+                                <h4>Species</h4>
+                                <ul id="speciesTit">
+                                    ${linkToSpecies(filmS)}
+                                    
                                 </ul>
                             </div>
-                            
-                        </div> 
+                            <div class="res">
+                                <h4>Characters</h4>
+                                <ul id="charactersTit">
+            
+                                    ${linkToCharacter(filmS)}
+                                </ul>
+                            </div>
+                            <div class="res">
+                                <h4>Planets</h4>
+                                <ul id="planetsTit">
+                                    ${linkToPlanet(filmS)}
+                                    
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>`
     document.getElementById('planetInfoBlock').innerHTML = result;
