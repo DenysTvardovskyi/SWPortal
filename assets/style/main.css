@@ -162,6 +162,31 @@ button{
     height: 400px;
 }
 
+#Options{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#Options > li >button {
+    padding: 5px;
+    color: orange;
+    background: none;
+    min-width: 120px;
+    margin: 0 20px;
+}
+
+#Options > li >button:hover{
+    background: orange;
+    color: #191919;
+}
+
+#Options > li >button.active{
+    background: orange;
+    color: #191919;
+}
+
 #main .info-wrapper{
     color: #ffffff;
 }
@@ -255,5 +280,9 @@ button{
     flex-direction: column;
     align-items: flex-start;
 
+}
+
+button:hover{
+    cursor: pointer;
 }
 

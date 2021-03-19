@@ -10,7 +10,8 @@
 let full = null;
 let namePi = null
 let searchNode = null;
-let mainUrl = "https://swapi.dev/api/planets/?search=";
+let type = "planets"
+let mainUrl = `https://swapi.dev/api/${type}/?search=`;
 
 //generate grid on load
 const laod = document.addEventListener("load", search())
@@ -19,7 +20,7 @@ const laod = document.addEventListener("load", search())
 let searchLine = document.getElementById("search")
 let searchBtn = document.getElementById("searchBtn")
 searchBtn.addEventListener("click",_=>{
-    mainUrl = "https://swapi.dev/api/planets/?search=";
+    mainUrl = `https://swapi.dev/api/${type}/?search=`;
     mainUrl +=searchLine.value
     search()
 
