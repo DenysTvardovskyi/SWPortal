@@ -179,12 +179,11 @@ button{
 
 #Options > li >button:hover{
     background: orange;
-    color: #191919;
+    color: #191919; 
 }
 
-#Options > li >button.active{
-    background: orange;
-    color: #191919;
+#optionTitle{
+   
 }
 
 #main .info-wrapper{

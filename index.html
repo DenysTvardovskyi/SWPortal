@@ -12,19 +12,19 @@
     <header>
         <h1>STAR WARS HuB</h1>  
         <ul id="Options">
-            <li><button  id="films">films</button></li>
-            <li><button id="people">people</button></li>
-            <li><button id="planets" class="active">planets</button></li>
-            <li><button id="species " >species</button></li>
-            <li><button id="starships">starships</button></li>
-            <li><button id="vehicles">vehicles</button></li>
+            <li><button onclick="option(this.id)"  id="films">films</button></li>
+            <li><button onclick="option(this.id)" id="people">people</button></li>
+            <li><button onclick="option(this.id)" id="planets">planets</button></li>
+            <li><button onclick="option(this.id)" id="species " >species</button></li>
+            <li><button onclick="option(this.id)" id="starships">starships</button></li>
+            <li><button onclick="option(this.id)" id="vehicles">vehicles</button></li>
         </ul>
     </header>
     
     <div class="line"></div>
     <div class="planets">
         
-        <h2>Planets</h2> 
+        <h2 id="optionTitle">Planets</h2> 
         <div class="s-line">
             <input id="search" type="text" value="">
             <input id="searchBtn"type="submit" value="search">
