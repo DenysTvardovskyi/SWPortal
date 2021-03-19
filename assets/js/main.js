@@ -1,12 +1,3 @@
-// const SECTION_LIST = {
-//     "films": "https://swapi.dev/api/films/",
-//     "people": "https://swapi.dev/api/people/",
-//     "planets": "https://swapi.dev/api/planets/",
-//     "species": "https://swapi.dev/api/species/",
-//     "starships": "https://swapi.dev/api/starships/",
-//     "vehicles": "https://swapi.dev/api/vehicles/"
-// }
-
 let filmNode = null;
 let residentsNode = null;
 let speciesNode = null;
@@ -23,10 +14,14 @@ let searchNode = null;
 let type = "planets"
 let mainUrl = `https://swapi.dev/api/${type}/?search=`;
 
+//----------------------------------------------------
 //generate grid on load
+//----------------------------------------------------
 const laod = document.addEventListener("load", search())
 
+//----------------------------------------------------
 //search line reader
+//----------------------------------------------------
 let searchLine = document.getElementById("search")
 let searchBtn = document.getElementById("searchBtn")
 searchBtn.addEventListener("click",_=>{
@@ -36,7 +31,9 @@ searchBtn.addEventListener("click",_=>{
 
     
 })
+//----------------------------------------------------
 //search engine
+//----------------------------------------------------
 async function search() {
     let dir = mainUrl
     searchNode = await fetch(dir)
@@ -44,7 +41,7 @@ async function search() {
         .then(data => searchNode = data );
     switch(type){
         case "planets":
-            await searchBody()
+            await planet_search()
             break;
         case "people":
             await people_search()
@@ -64,7 +61,7 @@ async function search() {
     return searchNode
     
 }
-
+//species
 function species_search() {
     let ped = document.getElementById("main")
     ped.innerHTML=''
@@ -288,44 +285,45 @@ function people_search() {
     
     for (let i = 0; i < searchNode.results.length; i++){
         if(searchNode.results.length === 1){
-            let persone = searchNode.results[0]
+            let people = searchNode.results[0]
             let result2 = 
                 `
                 <div class="info-wrapper">
-                    <div class = "title-nav"><h3>${persone.name}<p>(${persone.name})</p></h3></div>
+                    <div class = "title-nav"><h3>${people.name}<p>(${people.name})</p></h3></div>
                     <div class = "info-blocks">
                         
                         <div class="left">
                             <h4>Specification</h4>
                             <div class="spec-sec">
-                                <li>Gender: <span>${persone.gender}</span></li>
-                                <li>Birth Year:  <span>${persone.birth_year}</span></li>
-                                <li>Homeworld:  <span>${persone.homeworld}</span></li>
-                                <li>Eye color:  <span>${persone.eye_color}</span></li>
-                                <li>Hair color:  <span>${persone.hair_color}</span></li>
-                                <li>Mass:  <span>${persone.mass}</span> G</li>
-                                <li>Skin color:  <span>${persone.skin_color}</span></li>
+                                <li>Gender: <span>${people.gender}</span></li>
+                                <li>Birth Year:  <span>${people.birth_year}</span></li>
+                                <li>Homeworld:  <span id="homeworldTit">${linkToHomeworld(people)}</span></li>
+                                <li>Eye color:  <span>${people.eye_color}</span></li>
+                                <li>Hair color:  <span>${people.hair_color}</span></li>
+                                <li>Mass:  <span>${people.mass}</span> G</li>
+                                <li>Skin color:  <span>${people.skin_color}</span></li>
+
                             </div>
                         </div> 
                         <div class="right">
                             <div class="res">
                                 <h4>StartShips</h4>
-                                <ul id="starships">
+                                <ul id="starshipTit">
                  
-                                    
+                                    ${linkToStarship(people)}
                                 </ul>
                             </div>
                             <div class="res">
                                 <h4>Vehicles</h4>
-                                <ul id="vehicles">
-                 
+                                <ul id="vehiclesTit">
+                                    ${linkToVehicles(people)}
                                     
                                 </ul>
                             </div>
                             <div class="res">
                                 <h4>Species</h4>
-                                <ul id="species">
-                 
+                                <ul id="speciesTit">
+                                    ${linkToSpecies(people)}
                                     
                                 </ul>
                             </div>
@@ -333,7 +331,7 @@ function people_search() {
                                 <h4>Films</h4>
                                 <ul id="filmTit"> 
                                 
-                                    ${linkToFilm(persone)}          
+                                    ${linkToFilm(people)}          
                                 </ul>
                             </div>
                         </div> 
@@ -348,7 +346,7 @@ function people_search() {
                     <div class="basic-info">
                         <li>Name: ${searchNode.results[i].name}</li>
                         <li>Birth Year: ${searchNode.results[i].birth_year }km</li>
-                        <li>Gender : ${searchNode.results[i].gender }</li>
+                        <li>Homeworld: ${searchNode.results[i].gender }</li>
                     </div>
                     <div class="more-info">
                         <li id="${i}" onclick="reply_people(this.id)">More Info</li>
@@ -360,10 +358,8 @@ function people_search() {
         }
     }
 }
-
-//search result config
 //planet
-function searchBody() {
+function planet_search() {
     let ped = document.getElementById("main")
     ped.innerHTML=''
     
@@ -428,8 +424,9 @@ function searchBody() {
         }
     }
 }
-
+//----------------------------------------------------
 //Convert links to residents data
+//----------------------------------------------------
 //residents
 async function linkToResidents(planet) {
     fes = ''
@@ -563,7 +560,83 @@ async function homeworldPicker(link) {
         .then(data =>   homeworldNode = data );
     return  homeworldNode
 }
+//starships
+async function linkToStarship(planet) {
+    sta = ''
+    let starshipLinks = planet.starships
+    if(starshipLinks.length===0){
+        return "none"
+    }else{
+        for(let i =0; i<starshipLinks.length;i++){
+           await starshipAsemble(starshipLinks[i])
+        }
+        document.getElementById("starshipTit").innerHTML = sta
+    }  
+}
+const starshipAsemble = async (link)=>{
+    await starshipPicker(link).then((a)=>{
+        sta+= ""+ a.name + " - " + a.model +"; <br> " 
+    })
+    return sta
+}
+async function starshipPicker(link) {
+    startshipNode=  await fetch(link)
+        .then(response => response.json())
+        .then(data =>   startshipNode = data );
+    return  startshipNode
+}
 
+//vehicles
+async function linkToVehicles(planet) {
+    veh = ''
+    let vehiclesLinks = planet.vehicles
+    if(vehiclesLinks.length===0){
+        return "none"
+    }else{
+        for(let i =0; i<vehiclesLinks.length;i++){
+           await vehiclesAsemble(vehiclesLinks[i])
+        }
+        document.getElementById("vehiclesTit").innerHTML = veh
+    }  
+}
+const vehiclesAsemble = async (link)=>{
+    await vehiclesPicker(link).then((a)=>{
+        veh+= ""+ a.name + " - " + a.model +"; <br> " 
+    })
+    return veh
+}
+async function vehiclesPicker(link) {
+    vehiclesNode=  await fetch(link)
+        .then(response => response.json())
+        .then(data =>   vehiclesNode = data );
+    return  vehiclesNode
+}
+
+//species
+async function linkToSpecies(planet) {
+    spe = ''
+    let speciesLinks = planet.species
+    if(speciesLinks.length===0){
+        return "none"
+    }else{
+        for(let i =0; i<speciesLinks.length;i++){
+           await speciesAsemble(speciesLinks[i])
+        }
+        document.getElementById("speciesTit").innerHTML = spe
+    }  
+}
+const speciesAsemble = async (link)=>{
+    await speciesPicker(link).then((a)=>{
+        spe+= ""+ a.name + " - " + a.language +"; <br> " 
+    })
+    return spe
+}
+async function speciesPicker(link) {
+    speciesNode=  await fetch(link)
+        .then(response => response.json())
+        .then(data =>   speciesNode = data );
+    return  speciesNode
+}
 
 
 
@@ -746,6 +819,122 @@ function reply_vehicles(clicked_id){
 }
 //species
 function reply_species(clicked_id){
+    document.getElementById("planetInfoBlock").style.display = 'flex'
+    let species = searchNode.results[clicked_id]
+    
+    
+    
+    let result = 
+    `
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${species.name}<p>(${species.name})</p></h3><button onclick="closeInfoBlock()">Close</button></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Classification: <span>${species.classification}</span></li>
+                                <li>Designation:  <span>${species.designation}</span></li>
+                                <li>Average height:  <span>${species.average_height}</span>cm</li>
+                                <li>Average livespan:  <span>${species.average_lifespan}</span> credists</li>
+                                <li>Eye colors:  <span>${species.eye_colors}</span>m</li>
+                                <li>Hair colors:  <span>${species.hair_colors}</span></li>
+                                <li>Language:  <span>${species.language}</span></li>
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                <h4>People</h4>
+                                <ul id="peopleTit"> 
+
+                                    ${linkToPeople(species)}
+                                        
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Homeworld</h4>
+                                <ul id="homeworldTit"> 
+                                
+                                    ${linkToHomeworld(species)} 
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Films</h4>
+                                <ul id="filmTit"> 
+                                
+                                    ${linkToFilm(species)}          
+                                </ul>
+                            </div>
+                            
+                        </div> 
+                    </div>
+                </div>`
+    document.getElementById('planetInfoBlock').innerHTML = result;
+
+}
+//people
+function reply_people(clicked_id){
+    document.getElementById("planetInfoBlock").style.display = 'flex'
+    let people = searchNode.results[clicked_id]
+    
+    
+    
+    let result = 
+    `
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${people.name}<p>(${people.name})</p></h3><button onclick="closeInfoBlock()">Close</button></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Gender: <span>${people.gender}</span></li>
+                                <li>Birth Year:  <span>${people.birth_year}</span></li>
+                                <li>Homeworld:  <span id="homeworldTit">${linkToHomeworld(people)}</span></li>
+                                <li>Eye color:  <span>${people.eye_color}</span></li>
+                                <li>Hair color:  <span>${people.hair_color}</span></li>
+                                <li>Mass:  <span>${people.mass}</span> G</li>
+                                <li>Skin color:  <span>${people.skin_color}</span></li>
+
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                <h4>StartShips</h4>
+                                <ul id="starshipTit">
+                 
+                                    ${linkToStarship(people)}
+                                </ul>
+                            </div>
+                            <div class="res">
+                                <h4>Vehicles</h4>
+                                <ul id="vehiclesTit">
+                                    ${linkToVehicles(people)}
+                                    
+                                </ul>
+                            </div>
+                            <div class="res">
+                                <h4>Species</h4>
+                                <ul id="speciesTit">
+                                    ${linkToSpecies(people)}
+                                    
+                                </ul>
+                            </div>
+                            <div class="fil">
+                                <h4>Films</h4>
+                                <ul id="filmTit"> 
+                                
+                                    ${linkToFilm(people)}          
+                                </ul>
+                            </div>
+                        </div> 
+                    </div>
+                </div>`
+    document.getElementById('planetInfoBlock').innerHTML = result;
+
+}
+//films
+function reply_films(clicked_id){
     document.getElementById("planetInfoBlock").style.display = 'flex'
     let species = searchNode.results[clicked_id]
     
