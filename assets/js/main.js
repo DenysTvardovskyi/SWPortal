@@ -50,6 +50,9 @@ async function search() {
         case "starships":
             await startship_search()
             break;
+        case "vehicles":
+            await vehicles_search()
+            break;
     }
         
         
@@ -80,7 +83,7 @@ function startship_search() {
                                 <li>Length:  <span>${starship.length}</span>m</li>
                                 <li>Crew:  <span>${starship.crew}</span></li>
                                 <li>Passengers:  <span>${starship.passengers}</span></li>
-                                <li>Max atmosphering speed:  <span>${starship.msx_atmosphering_speed}</span></li>
+                                <li>Max atmosphering speed:  <span>${starship.max_atmosphering_speed}</span></li>
                                 <li>Hyperdrive Rating:  <span>${starship.hyperdrive_rating}</span></li>
                                 <li>MGLT:  <span>${starship.MGLT}</span></li>
                                 <li>Cargo capacity:  <span>${starship.cargo_capacity}</span> kg</li>
@@ -128,6 +131,77 @@ function startship_search() {
         }
     }
 }
+
+function vehicles_search() {
+    let ped = document.getElementById("main")
+    ped.innerHTML=''
+    
+    for (let i = 0; i < searchNode.results.length; i++){
+        if(searchNode.results.length === 1){
+            let vehicles = searchNode.results[0]
+            let result2 = 
+                `
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${vehicles.name}<p>(${vehicles.name})</p></h3></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Model: <span>${vehicles.model}</span></li>
+                                <li>Class:  <span>${vehicles.vehicle_class}</span></li>
+                                <li>Manufacturer:  <span>${vehicles.manufacturer}</span></li>
+                                <li>Price:  <span>${vehicles.cost_in_credits}</span> credists</li>
+                                <li>Length:  <span>${vehicles.length}</span>m</li>
+                                <li>Crew:  <span>${vehicles.crew}</span></li>
+                                <li>Passengers:  <span>${vehicles.passengers}</span></li>
+                                <li>Max atmosphering speed:  <span>${vehicles.max_atmosphering_speed}</span></li>
+                                <li>Cargo capacity:  <span>${vehicles.cargo_capacity}</span> kg</li>
+                                <li>Consumables:  <span>${vehicles.consumables}</span></li>
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                
+                            </div>
+                            <div class="fil">
+                                <h4>Films</h4>
+                                <ul id="filmTit"> 
+                                
+                                    ${linkToFilm(vehicles)}          
+                                </ul>
+                            </div>
+                            <h4>Pilots</h4>
+                                <ul id="pilotsTit"> 
+
+                                    ${linkToPilot(vehicles)}
+                                            
+                                </ul>
+                        </div> 
+                    </div>
+                </div>`
+                ped.innerHTML += result2
+        }else{
+            let result1 =
+            `
+            <div class="item">
+                <div class="info">
+                    <div class="basic-info">
+                        <li>Name: ${searchNode.results[i].name}</li>
+                        <li>Model: ${searchNode.results[i].model }km</li>
+                        <li>Vehicle class : ${searchNode.results[i].vehicle_class }</li>
+                    </div>
+                    <div class="more-info">
+                        <li id="${i}" onclick="reply_vehicles(this.id)">More Info</li>
+                    </div>
+                </div>
+            </div>
+            ` 
+            ped.innerHTML += result1
+        }
+    }
+}
+
 
 function people_search() {
     
@@ -394,6 +468,7 @@ async function option(id) {
 }
 
 // More info Pop up
+//planet
 function reply_id(clicked_id){
     document.getElementById("planetInfoBlock").style.display = 'flex'
     let planet = searchNode.results[clicked_id]
@@ -438,11 +513,7 @@ function reply_id(clicked_id){
     document.getElementById('planetInfoBlock').innerHTML = result;
 
 }
-
-function closeInfoBlock() {
-    document.getElementById("planetInfoBlock").style.display = 'none'
-}
-
+//starship
 function reply_starships(clicked_id){
     document.getElementById("planetInfoBlock").style.display = 'flex'
     let starship = searchNode.results[clicked_id]
@@ -495,9 +566,61 @@ function reply_starships(clicked_id){
     document.getElementById('planetInfoBlock').innerHTML = result;
 
 }
+//vehicles
+function reply_vehicles(clicked_id){
+    document.getElementById("planetInfoBlock").style.display = 'flex'
+    let vehicles = searchNode.results[clicked_id]
+    
+    
+    
+    let result = 
+    `
+                <div class="info-wrapper">
+                    <div class = "title-nav"><h3>${vehicles.name}<p>(${vehicles.name})</p></h3><button onclick="closeInfoBlock()">Close</button></div>
+                    <div class = "info-blocks">
+                        
+                        <div class="left">
+                            <h4>Specification</h4>
+                            <div class="spec-sec">
+                                <li>Model: <span>${vehicles.model}</span></li>
+                                <li>Class:  <span>${vehicles.vehicle_class}</span></li>
+                                <li>Manufacturer:  <span>${vehicles.manufacturer}</span></li>
+                                <li>Price:  <span>${vehicles.cost_in_credits}</span> credists</li>
+                                <li>Length:  <span>${vehicles.length}</span>m</li>
+                                <li>Crew:  <span>${vehicles.crew}</span></li>
+                                <li>Passengers:  <span>${vehicles.passengers}</span></li>
+                                <li>Max atmosphering speed:  <span>${vehicles.max_atmosphering_speed}</span></li>
+                                <li>Cargo capacity:  <span>${vehicles.cargo_capacity}</span> kg</li>
+                                <li>Consumables:  <span>${vehicles.consumables}</span></li>
+                            </div>
+                        </div> 
+                        <div class="right">
+                            <div class="res">
+                                
+                            </div>
+                            <div class="fil">
+                                <h4>Films</h4>
+                                <ul id="filmTit"> 
+                                
+                                    ${linkToFilm(vehicles)}          
+                                </ul>
+                            </div>
+                            <h4>Pilots</h4>
+                                <ul id="pilotsTit"> 
 
+                                    ${linkToPilot(vehicles)}
+                                            
+                                </ul>
+                        </div> 
+                    </div>
+                </div>`
+    document.getElementById('planetInfoBlock').innerHTML = result;
 
+}
 
+function closeInfoBlock() {
+    document.getElementById("planetInfoBlock").style.display = 'none'
+}
 
 
 //grid configurator
