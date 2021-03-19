@@ -36,34 +36,51 @@ searchBtn.addEventListener("click",_=>{
 //----------------------------------------------------
 //search engine
 //----------------------------------------------------
-async function search() {
+async function fun() {
     let dir = mainUrl
     searchNode = await fetch(dir)
     .then(response => response.json())
         .then(data => searchNode = data );
+        
+    return searchNode
+}
+
+
+async function search() {
+    
     switch(type){
         case "planets":
+            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            await fun()
             await planet_search()
             break;
         case "people":
+            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            await fun()
             await people_search()
             break;
         case "starships":
+            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            await fun()
             await startship_search()
             break;
         case "vehicles":
+            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            await fun()
             await vehicles_search()
             break;
         case "species":
+            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            await fun()
             await species_search()
             break;
         case "films":
+            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            await fun()
             await films_search()
             break;
     }
-        
-        
-    return searchNode
+    
     
 }
 //species
