@@ -301,7 +301,7 @@ function vehicles_search() {
                             <h4>Pilots</h4>
                                 <ul id="pilotsTit"> 
 
-                                    ${lintToPar(starship, "pilots", "pilotsTit")}
+                                    ${lintToPar(vehicles, "pilots", "pilotsTit")}
                                             
                                 </ul>
                         </div> 
