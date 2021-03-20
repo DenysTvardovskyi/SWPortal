@@ -1,13 +1,11 @@
 let filmNode = null;
-let residentsNode = null;
 let speciesNode = null;
 let homeworldNode = null;
-let peopleNode = null;
 let startshipNode = null;
 let vehiclesNode = null;
-let pilotNode = null;
-let CharacterNode = null;
 let planetNode = null;
+let peopleNode = null;
+
 
 //main node
 let searchNode = null;
@@ -145,7 +143,7 @@ function species_search() {
                                 <h4>People</h4>
                                 <ul id="peopleTit"> 
 
-                                    ${linkToPeople(species)}
+                                    ${lintToPar(species, "people", "peopleTit")}
                                         
                                 </ul>
                             </div>
@@ -233,7 +231,7 @@ function startship_search() {
                             <h4>Pilots</h4>
                                 <ul id="pilotsTit"> 
 
-                                    ${linkToPilot(starship)}
+                                    ${lintToPar(starship, "pilots", "pilotsTit")}
                                             
                                 </ul>
                         </div> 
@@ -303,7 +301,7 @@ function vehicles_search() {
                             <h4>Pilots</h4>
                                 <ul id="pilotsTit"> 
 
-                                    ${linkToPilot(vehicles)}
+                                    ${lintToPar(starship, "pilots", "pilotsTit")}
                                             
                                 </ul>
                         </div> 
@@ -376,7 +374,7 @@ function people_search() {
                             <div class="res">
                                 <h4>Species</h4>
                                 <ul id="speciesTit">
-                                    ${linkToSpecies(people)}
+                                    ${lintToPar(people, "species", "speciesTit")}
                                     
                                 </ul>
                             </div>
@@ -443,7 +441,7 @@ function planet_search() {
                                 <h4>Residents</h4>
                                 <ul id="resNames">
                  
-                                    ${linkToResidents(planet)}
+                                    ${lintToPar(planet, "residents", "resNames")}
                                 </ul>
                             </div>
                             <div class="fil">
@@ -487,8 +485,8 @@ function films_search() {
             let planet = searchNode.results[0]
             linkToStarship(planet)
             linkToVehicles(planet)
-            linkToSpecies(planet)
-            linkToCharacter(planet)
+            lintToPar(planet, "species", "speciesTit")
+            lintToPar(planet, "characters", "charactersTit")
             linkToPlanet(planet)
             
             let result2 = 
@@ -571,63 +569,32 @@ function films_search() {
 //----------------------------------------------------
 //Convert links to residents data
 //----------------------------------------------------
-//residents
-async function linkToResidents(planet) {
-    fes = ''
-    let links = planet.residents
-    if(links.length === 0){
-        document.getElementById("resNames").innerText = "none"
+//(people, residents, characters, pilots)
+async function lintToPar(nodeVal, key, id) {
+    nod =""
+    let nodeLink = nodeVal[key]
+    if(nodeLink.length === 0){
+        return  "none"
     }else{
-        for(let i =0; i<links.length;i++){
-           await residentsAsemble(links[i])
+        for(let i =0; i<nodeLink.length;i++){
+           await resultAsemble(nodeLink[i], "name", "gender", "birth_year")
         }
-        document.getElementById("resNames").innerHTML = fes
+        document.getElementById(id).innerHTML = nod
     } 
 }
-const  residentsAsemble = async (link)=>{
-    await residentsPicker(link).then((a)=>{
-        fes+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
+const  resultAsemble = async (link, key1, key2, key3)=>{
+    await resultPicker(link).then((a)=>{
+        nod+= ""+ a[key1] + " - " + a[key1] +" - "+a[key1]+"; <br> " 
     })
-    return fes   
+    return nod   
 }
-async function residentsPicker(link) {
+async function resultPicker(link) {
     
-    residentsNode= await fetch(link)
+    peopleNode= await fetch(link)
         .then(response => response.json())
-        .then(data => residentsNode = data );
-    return residentsNode
+        .then(data => peopleNode = data );
+    return peopleNode
 }
-
-
-//pilots
-async function linkToPilot(transport) {
-    tra = ""
-    let toFind = transport.pilots;
-    console.log(toFind.length)
-    if(toFind.length === 0){
-        console.log('none')
-    }else{
-        for(let i =0; i<toFind.length;i++){
-            
-           await pilotAsemble(toFind[i])
-        }
-        document.getElementById("pilotsTit").innerHTML = tra
-    } 
-}
-const pilotAsemble = async (link)=>{
-    await pilotPicker(link).then((a)=>{
-        tra+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
-    })
-    return tra
-}
-async function pilotPicker(link) {
-    
-    pilotNode=  await fetch(link)
-        .then(response => response.json())
-        .then(data =>   pilotNode = data );
-    return  pilotNode
-}
-
 
 //films
 async function linkToFilm(planet) {
@@ -655,34 +622,6 @@ async function filmPicker(link) {
         .then(data =>   filmNode = data );
     return  filmNode
 }
-
-//people
-async function linkToPeople(planet) {
-    peo = ''
-    let peopleLinks = planet.people
-    if(peopleLinks.length===0){
-        return "none"
-    }else{
-        for(let i =0; i<peopleLinks.length;i++){
-           await peopleAsemble(peopleLinks[i])
-        }
-        document.getElementById("peopleTit").innerHTML = peo
-    }  
-}
-const peopleAsemble = async (link)=>{
-    await peoplePicker(link).then((a)=>{
-        peo+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
-    })
-    return peo
-}
-async function peoplePicker(link) {
-    
-    peopleNode=  await fetch(link)
-        .then(response => response.json())
-        .then(data =>   peopleNode = data );
-    return  peopleNode
-}
-
 //homeworld
 async function linkToHomeworld(planet) {
     hom = ''
@@ -781,32 +720,7 @@ async function speciesPicker(link) {
         .then(data =>   speciesNode = data );
     return  speciesNode
 }
-//character
-async function linkToCharacter(planet) {
-    cha = ''
-    let characterLinks = planet.characters
-    if(characterLinks.length===0){
-        return "none"
-    }else{
-        for(let i =0; i<characterLinks.length;i++){
-           await characterAsemble(characterLinks[i])
-        }
-        document.getElementById("charactersTit").innerHTML = cha
-    }  
-}
-const characterAsemble = async (link)=>{
-    await characterPicker(link).then((a)=>{
-        cha+= ""+ a.name + " - " + a.gender +" - "+a.birth_year+"; <br> " 
-    })
-    return cha
-}
-async function characterPicker(link) {
-    
-    CharacterNode=  await fetch(link)
-        .then(response => response.json())
-        .then(data =>   CharacterNode = data );
-    return  CharacterNode
-}
+
 //planet
 async function linkToPlanet(planet) {
     pla = ''
@@ -892,7 +806,7 @@ function reply_id(clicked_id){
                             <div class="res">
                                 <h4>Residents</h4>
                                 <ul id="resNames"> 
-                                    ${linkToResidents(planet)}
+                                    ${lintToPar(planet, "residents", "resNames")}
                                 </ul>
                             </div>
                             <div class="res">
@@ -942,7 +856,7 @@ function reply_starships(clicked_id){
                     <h4>Pilots</h4>
                     <ul id="pilotsTit"> 
 
-                        ${linkToPilot(starship)}
+                        ${lintToPar(starship, "pilots", "pilotsTit")}
                                 
                     </ul>
                 </div>
@@ -993,7 +907,7 @@ function reply_vehicles(clicked_id){
                             <h4>Pilots</h4>
                             <ul id="pilotsTit"> 
 
-                                ${linkToPilot(vehicles)}
+                                ${lintToPar(vehicles, "pilots", "pilotsTit")}
                                         
                             </ul>
                             </div>
@@ -1041,7 +955,7 @@ function reply_species(clicked_id){
                                 <h4>People</h4>
                                 <ul id="peopleTit"> 
 
-                                    ${linkToPeople(species)}
+                                    ${lintToPar(species, "people", "peopleTit")}
                                         
                                 </ul>
                             </div>
@@ -1110,7 +1024,7 @@ function reply_people(clicked_id){
                             <div class="res">
                                 <h4>Species</h4>
                                 <ul id="speciesTit">
-                                    ${linkToSpecies(people)}
+                                    ${lintToPar(people, "species", "speciesTit")}
                                     
                                 </ul>
                             </div>
@@ -1168,7 +1082,7 @@ function reply_films(clicked_id){
                             <div class="res">
                                 <h4>Species</h4>
                                 <ul id="speciesTit">
-                                    ${linkToSpecies(filmS)}
+                                    ${lintToPar(filmS, "species", "speciesTit")}
                                     
                                 </ul>
                             </div>
@@ -1176,7 +1090,7 @@ function reply_films(clicked_id){
                                 <h4>Characters</h4>
                                 <ul id="charactersTit">
             
-                                    ${linkToCharacter(filmS)}
+                                    ${lintToPar(filmS, "characters", "charactersTit")}
                                 </ul>
                             </div>
                             <div class="res">
