@@ -26,10 +26,41 @@ const laod = document.addEventListener("load", search())
 //----------------------------------------------------
 let searchLine = document.getElementById("search")
 let searchBtn = document.getElementById("searchBtn")
-searchBtn.addEventListener("click",_=>{
+searchBtn.addEventListener("click",async _=>{
     mainUrl = `https://swapi.dev/api/${type}/?search=`;
     mainUrl +=searchLine.value
-    search()
+    switch(type){
+        case "planets":
+            
+            await fun()
+            await planet_search()
+            break;
+        case "people":
+            
+            await fun()
+            await people_search()
+            break;
+        case "starships":
+            
+            await fun()
+            await startship_search()
+            break;
+        case "vehicles":
+            
+            await fun()
+            await vehicles_search()
+            break;
+        case "species":
+            
+            await fun()
+            await species_search()
+            break;
+        case "films":
+            
+            await fun()
+            await films_search()
+            break;
+    }
 
     
 })
@@ -454,6 +485,12 @@ function films_search() {
     for (let i = 0; i < searchNode.results.length; i++){
         if(searchNode.results.length === 1){
             let planet = searchNode.results[0]
+            linkToStarship(planet)
+            linkToVehicles(planet)
+            linkToSpecies(planet)
+            linkToCharacter(planet)
+            linkToPlanet(planet)
+            
             let result2 = 
                 `
                 <div class="info-wrapper">
@@ -474,20 +511,20 @@ function films_search() {
                                 <h4>StartShips</h4>
                                 <ul id="starshipTit">
             
-                                    ${linkToStarship(planet)}
+                                    
                                 </ul>
                             </div>
                             <div class="res">
                                 <h4>Vehicles</h4>
                                 <ul id="vehiclesTit">
-                                    ${linkToVehicles(planet)}
+                               
                                     
                                 </ul>
                             </div>
                             <div class="res">
                                 <h4>Species</h4>
                                 <ul id="speciesTit">
-                                    ${linkToSpecies(planet)}
+                                 
                                     
                                 </ul>
                             </div>
@@ -495,13 +532,13 @@ function films_search() {
                                 <h4>Characters</h4>
                                 <ul id="charactersTit">
             
-                                    ${linkToCharacter(planet)}
+                            
                                 </ul>
                             </div>
                             <div class="res">
                                 <h4>Planets</h4>
                                 <ul id="planetsTit">
-                                    ${linkToPlanet(planet)}
+                             
                                     
                                 </ul>
                             </div>
@@ -858,7 +895,7 @@ function reply_id(clicked_id){
                                     ${linkToResidents(planet)}
                                 </ul>
                             </div>
-                            <div class="fil">
+                            <div class="res">
                                 <h4>Films</h4>
                                 <ul id="filmTit"> 
                                     ${linkToFilm(planet)}          
@@ -902,21 +939,21 @@ function reply_starships(clicked_id){
             </div> 
             <div class="right">
                 <div class="res">
-                    
+                    <h4>Pilots</h4>
+                    <ul id="pilotsTit"> 
+
+                        ${linkToPilot(starship)}
+                                
+                    </ul>
                 </div>
-                <div class="fil">
+                <div class="res">
                     <h4>Films</h4>
                     <ul id="filmTit"> 
                     
                         ${linkToFilm(starship)}          
                     </ul>
                 </div>
-                <h4>Pilots</h4>
-                    <ul id="pilotsTit"> 
-
-                        ${linkToPilot(starship)}
-                                
-                    </ul>
+                
             </div> 
         </div>
     </div>`
@@ -953,21 +990,21 @@ function reply_vehicles(clicked_id){
                         </div> 
                         <div class="right">
                             <div class="res">
-                                
+                            <h4>Pilots</h4>
+                            <ul id="pilotsTit"> 
+
+                                ${linkToPilot(vehicles)}
+                                        
+                            </ul>
                             </div>
-                            <div class="fil">
+                            <div class="res">
                                 <h4>Films</h4>
                                 <ul id="filmTit"> 
                                 
                                     ${linkToFilm(vehicles)}          
                                 </ul>
                             </div>
-                            <h4>Pilots</h4>
-                                <ul id="pilotsTit"> 
-
-                                    ${linkToPilot(vehicles)}
-                                            
-                                </ul>
+                            
                         </div> 
                     </div>
                 </div>`
@@ -1008,14 +1045,14 @@ function reply_species(clicked_id){
                                         
                                 </ul>
                             </div>
-                            <div class="fil">
+                            <div class="res">
                                 <h4>Homeworld</h4>
                                 <ul id="homeworldTit"> 
                                 
                                     ${linkToHomeworld(species)} 
                                 </ul>
                             </div>
-                            <div class="fil">
+                            <div class="res">
                                 <h4>Films</h4>
                                 <ul id="filmTit"> 
                                 
@@ -1077,7 +1114,7 @@ function reply_people(clicked_id){
                                     
                                 </ul>
                             </div>
-                            <div class="fil">
+                            <div class="res">
                                 <h4>Films</h4>
                                 <ul id="filmTit"> 
                                 
@@ -1103,16 +1140,17 @@ function reply_films(clicked_id){
                     <div class = "title-nav"><h3>${filmS.title}<p>(${filmS.title})</p></h3><button onclick="closeInfoBlock()">Close</button></div>
                     <div class = "info-blocks">
                         
-                        <div class="left">
-                            <h4>Specification</h4>
-                            <div class="spec-sec">
-                                <li>Opening crawl: <br><span>${filmS.opening_crawl  }</span></li>
-                                <li>Director:  <span>${filmS.director }</span> days</li>
-                                <li>Producer:  <span>${filmS.producer }</span> km</li>
-                                <li>Release date :  <span>${filmS.release_date }</span></li>
-                            </div>
-                        </div> 
+                        
                         <div class="right">
+                            <div class="res">
+                                <h4>Specification</h4>
+                                <div class="spec-sec">
+                                    <li>Opening crawl: <br><span>${filmS.opening_crawl  }</span></li>
+                                    <li>Director:  <span>${filmS.director }</span> days</li>
+                                    <li>Producer:  <span>${filmS.producer }</span> km</li>
+                                    <li>Release date :  <span>${filmS.release_date }</span></li>
+                                </div>
+                            </div> 
                             <div class="res">
                                 <h4>StartShips</h4>
                                 <ul id="starshipTit">

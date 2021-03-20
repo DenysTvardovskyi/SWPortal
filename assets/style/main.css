@@ -196,6 +196,7 @@ button{
     align-items: center;
     width: 100%;
     justify-content: space-between;
+    
 }
 #main .title-nav h3{
     margin: 20px 0;
@@ -211,8 +212,8 @@ button{
     min-width: 800px;
     min-height: 600px;
     left: 50%;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     padding: 20px 50px;
     background: #232323;
     color: #ffffff;
@@ -244,6 +245,10 @@ button{
 .title-nav h3{
     font-size: 30px;
     font-family: 'Star Jedi', arial;
+    padding: 0 50px ;
+}
+.title-nav button{
+    padding: 0 50px;
 }
 .title-nav h3 p{
     font-size: 10px;
@@ -264,6 +269,7 @@ button{
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    padding: 0 50px;
 
 }
 .info-blocks .left .spec-sec > li{
@@ -279,6 +285,7 @@ button{
     flex-wrap: wrap;
     flex-direction: row;
     align-items: flex-start;
+    padding: 0 50px;
 
 }
 .info-blocks .right .res{
