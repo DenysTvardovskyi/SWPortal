@@ -6,6 +6,7 @@ h1,h2{
     margin: 50px 0 0 0;
 }
 
+
 :root{
     --grid-change: 33%;
 }
@@ -121,8 +122,8 @@ button{
     color: orange;
     border: none;
     border-bottom: 1px solid orange;
-    
     width: 50%;
+    
     
 }
 .s-line #search:focus{
@@ -175,16 +176,19 @@ button{
     background: none;
     min-width: 120px;
     margin: 0 20px;
+    font-family: 'Star Jedi', arial;
+    letter-spacing: 2px; 
+
+    
 }
+
 
 #Options > li >button:hover{
     background: orange;
     color: #191919; 
 }
 
-#optionTitle{
-   
-}
+
 
 #main .info-wrapper{
     color: #ffffff;
@@ -295,4 +299,3 @@ button{
 button:hover{
     cursor: pointer;
 }
-
