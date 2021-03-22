@@ -1,4 +1,4 @@
-@import url(https://allfont.net/allfont.css?fonts=star-jedi);
+@import "../star-jedi.css";
 h1,h2{
     font-family: 'Star Jedi', arial;
     text-align: center;
