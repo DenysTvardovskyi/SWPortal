@@ -583,8 +583,9 @@ async function lintToPar(nodeVal, key, id) {
     } 
 }
 const  resultAsemble = async (link, key1, key2, key3)=>{
+    link = `https${link.slice(4)}`
     await resultPicker(link).then((a)=>{
-        nod+= ""+ a[key1] + " - " + a[key1] +" - "+a[key1]+"; <br> " 
+        nod+= ""+ a[key1] + " - " + a[key2] +" - "+a[key3]+"; <br> " 
     })
     return nod   
 }
@@ -610,6 +611,7 @@ async function linkToFilm(planet) {
     }  
 }
 const filmAsemble = async (link)=>{
+     link = `https${link.slice(4)}`
     await filmPicker(link).then((a)=>{
         res+= ""+ a.title + " - " + a.release_date +"; <br> " 
     })
@@ -631,6 +633,7 @@ async function linkToHomeworld(planet) {
      
 }
 const homeworldAsemble = async (link)=>{
+    link = `https${link.slice(4)}`
     await homeworldPicker(link).then((a)=>{
         hom+= ""+ a.name +" <br> " 
     })
@@ -657,6 +660,7 @@ async function linkToStarship(planet) {
     }  
 }
 const starshipAsemble = async (link)=>{
+    link = `https${link.slice(4)}`
     await starshipPicker(link).then((a)=>{
         sta+= ""+ a.name + " - " + a.model +"; <br> " 
     })
@@ -683,6 +687,7 @@ async function linkToVehicles(planet) {
     }  
 }
 const vehiclesAsemble = async (link)=>{
+     link = `https${link.slice(4)}`
     await vehiclesPicker(link).then((a)=>{
         veh+= ""+ a.name + " - " + a.model +"; <br> " 
     })
@@ -709,6 +714,7 @@ async function linkToSpecies(planet) {
     }  
 }
 const speciesAsemble = async (link)=>{
+     link = `https${link.slice(4)}`
     await speciesPicker(link).then((a)=>{
         spe+= ""+ a.name + " - " + a.language +"; <br> " 
     })
@@ -735,6 +741,7 @@ async function linkToPlanet(planet) {
     }  
 }
 const palnetsAsemble = async (link)=>{
+    link = `https${link.slice(4)}`
     await palnetsPicker(link).then((a)=>{
         pla+= ""+ a.name +"; <br> " 
     })
