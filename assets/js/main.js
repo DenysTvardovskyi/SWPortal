@@ -10,7 +10,7 @@ let peopleNode = null;
 //main node
 let searchNode = null;
 
-
+let seackKey =1;
 let type = "planets"
 let mainUrl = `https://swapi.dev/api/${type}/?search=`;
 
@@ -79,32 +79,32 @@ async function search() {
     
     switch(type){
         case "planets":
-            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            mainUrl = `https://swapi.dev/api/${type}/?search=&page=`+seackKey;
             await fun()
             await planet_search()
             break;
         case "people":
-            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            mainUrl = `https://swapi.dev/api/${type}/?search=&page=`+seackKey;
             await fun()
             await people_search()
             break;
         case "starships":
-            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            mainUrl = `https://swapi.dev/api/${type}/?search=&page=`+seackKey;
             await fun()
             await startship_search()
             break;
         case "vehicles":
-            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            mainUrl = `https://swapi.dev/api/${type}/?search=&page=`+seackKey;
             await fun()
             await vehicles_search()
             break;
         case "species":
-            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            mainUrl = `https://swapi.dev/api/${type}/?search=&page=`+seackKey;
             await fun()
             await species_search()
             break;
         case "films":
-            mainUrl = `https://swapi.dev/api/${type}/?search=`;
+            mainUrl = `https://swapi.dev/api/${type}/?search=&page=`+seackKey;
             await fun()
             await films_search()
             break;
@@ -753,14 +753,14 @@ const NextPage = ()=>{
     if(searchNode.next == null){
         console.log("last")
     }else{
-        mainUrl = searchNode.next; search();
+        seackKey++; search();
     }
 }
 const PrevPage = ()=>{
     if(searchNode.previous == null){
-        console.log("last")
+        console.log("first")
     }else{
-        mainUrl = searchNode.previous; search()
+        seackKey--; search()
     }
     
 }
@@ -772,6 +772,7 @@ async function option(id) {
     
     document.getElementById("optionTitle").innerText= id
     type = id
+    seackKey=1;
     await search()
 }
 
