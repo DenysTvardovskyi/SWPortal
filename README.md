@@ -1,7 +1,9 @@
 # SWPortal
 
 
-Clone repo and test it localy. 
+StarWars Hub
+Created to help SW fans, geather information about Star Wars Universe.
+
 
 
 
@@ -12,3 +14,6 @@ Clone repo and test it localy.
 - Species
 - Starships
 - Vehicles
+
+
+> Power by SWAPI.dev
