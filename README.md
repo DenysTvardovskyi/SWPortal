@@ -1,4 +1,4 @@
-# [SWPortal](denistvardovskiy.github.io/swportal/)
+# [SWPortal](https://denistvardovskiy.github.io/SWPortal/)
 
 
 StarWars Hub
