@@ -41,3 +41,40 @@
         
     }
 }
+
+@media(max-width:720px){
+    :root{
+        --grid-change: 50% !important;
+    }  
+    #gridAjust{
+        display: none !important;
+    }
+    .info-blocks .right .res{
+        width: 80%;
+    }
+    .info-blocks .right{
+        min-height: auto !important;
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    .info-blocks{
+        flex-direction: column !important;
+    }
+    #planetInfoBlock{
+        min-width: auto !important;
+        min-height: auto i !important;
+    }
+    .info-blocks .left{
+        width: 85% !important;
+        height: auto !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        padding: 0 10px !important;
+    }
+    .info-blocks .left h4{
+        margin: 0 10px !important;
+    }
+    .info-blocks .left .spec-sec{
+        margin: 0 10px !important;
+    }
+}   
