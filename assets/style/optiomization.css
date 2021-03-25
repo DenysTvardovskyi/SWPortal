@@ -1,0 +1,43 @@
+@import "./main.css";
+
+
+@media(max-width:350px){
+    :root{
+        --grid-change: 50% !important;
+    }
+    .planets{
+        margin: 0 30px !important;
+    }
+    #gridAjust{
+        display: none !important;
+    }
+    #planetInfoBlock{
+        min-width: auto !important;
+        min-height: auto i !important;
+    }
+    .title-nav h3{
+        padding:  0 10px !important;
+    }
+    .info-blocks {
+        flex-direction: column !important;
+    }
+    .info-blocks .left{
+        width: 100% !important;
+        height: auto !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        padding: 0 10px !important;
+    }
+    .info-blocks .left h4{
+        margin: 0 10px !important;
+    }
+    .info-blocks .left .spec-sec{
+        margin: 0 10px !important;
+    }
+    .info-blocks .right{
+        flex-wrap: nowrap !important;
+        flex-direction: column !important;
+        padding: 0 !important;
+        
+    }
+}
