@@ -16,6 +16,7 @@ body{
     margin: 0;
     padding: 0;
     background-color: #191919;
+    
 }
 
 header{
@@ -225,6 +226,8 @@ button{
     color: #ffffff;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    max-height: 100%;
+    overflow-y: scroll;
 }
 
 .info-wrapper{
@@ -247,6 +250,7 @@ button{
     align-items: center;
     justify-content: space-evenly;
     width: 100%;
+    padding: 0 0 50px 0;
 }
 .title-nav h3{
     font-size: 30px;
